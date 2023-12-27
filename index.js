@@ -1,7 +1,7 @@
 // * requires
-const Manager = require("./Manager.js");
-const Engineer = require("./Engineer.js");
-const Intern = require("./Intern.js");
+const Manager = require("./lib/Manager.js");
+const Engineer = require("./lib/Engineer.js");
+const Intern = require("./lib/Intern.js");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -9,8 +9,7 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("../src/page-template.js");
-
+const render = require("./src/page-template.js");
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 
@@ -44,55 +43,47 @@ const TMquestions = [
         type: 'input',
         message: 'What is their office number?',
     },
-];
-
-
-
-
-
-
-inquirer
-    .prompt(TMquestions)
-    .then((response) => {
-        const { TMname, TMid, TMemail, TMoffice } = response;
-        console.log(response);
-    })
-    .then((nextStep = 
-            {
-                name: 'nextStep',
-                type: 'list',
-                message: 'What do you want to do now?',
-                choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
-            } 
-        ) => {
-        console.log(nextStep.value);
-    }
-    );
-
-
-// * When a user enters those requirements then the user is presented with a menu with the option to:
+    // * When a user enters those requirements then the user is presented with a menu with the option to:
     //   * Add an engineer
     //   * Add an intern 
     //   * Finish building the team
+    {
+        name: 'nextStep',
+        type: 'list',
+        message: 'What do you want to do now?',
+        choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
+    }
+];
+
+
+inquirer
+    .prompt (TMquestions)
+    .then((response) => {
+        const { TMname, TMid, TMemail, TMoffice, nextStep } = response;
+        console.log(response);
+        if (nextStep === "Add an engineer") {
+            console.log("option to add an engineer selected");
+        }
+        else if (nextStep === "Add an intern") {
+            console.log("option to add an intern selected");
+        }
+        else if (nextStep === "Finish building the team") {
+            // * prompt user with questions and log answers in a file named `team.html` in the `output` folder.
+            // * When a user decides to finish building their team then they exit the application, and the HTML is generated.   
+            fs.appendFile('output/team.html',
+            (`
+            ${TMname}
+            ${TMid}
+            ${TMemail}
+            ${TMoffice}
+            `),
+            (err) => err ? console.error(err) : console.log('HTML file generated'))
+        }
+    })
+;
 
 
 
-
-
-
-// // * prompt user with questions and log answers in a file named `team.html` in the `output` folder.
-// inquirer
-//     .prompt (nextStep)
-//     .then((response) => {
-//         const { TMname, TMid, TMemail, TMoffice } = response;
-//             if (nextStep === "Add an engineer") {
-//                 //! Engineer questions function
-//                 EngineerQuestions();
-//             }
-//             else if (nextStep === "Add an intern") {
-//                 //! Intern questions function
-//                 InternQuestions();
-//             }
 //             else if (nextStep === "Finish building the team") {
 //                 //! End process and create file   
 //                 // * When a user decides to finish building their team then they exit the application, and the HTML is generated.   
