@@ -93,6 +93,39 @@ inquirer
         }
         else if (nextStep === "Add an intern") {
             console.log("option to add an intern selected");
+            inquirer
+            .prompt ([
+            // * When a user selects the intern option then a user is prompted to enter the following and then the user is taken back to the menu:
+                //   * Intern’s name
+                //   * ID
+                //   * Email
+                //   * School
+                {
+                    name: 'name',
+                    type: 'input',
+                    message: 'What is the name of the intern?',
+                },
+                {
+                    name: 'id',
+                    type: 'input',
+                    message: 'What is their ID code?',
+                },
+                {
+                    name: 'email',
+                    type: 'input',
+                    message: 'What is their email address?',
+                },
+                {
+                    name: 'school',
+                    type: 'input',
+                    message: 'What is their school name?',
+                },
+            ])
+            
+            .then((Intern) => {
+                const { name, id, email, school } = Intern;
+                console.log(name, id, email, school);
+            })
         }
         else if (nextStep === "Finish building the team") {
             // * prompt user with questions and log answers in a file named `team.html` in the `output` folder.
@@ -116,38 +149,6 @@ inquirer
         (err) => err ? console.error(err) : console.log('HTML generated')
     )}
 });
-
-
-
-
-
-// // * When a user selects the intern option then a user is prompted to enter the following and then the user is taken back to the menu:
-//     //   * Intern’s name
-//     //   * ID
-//     //   * Email
-//     //   * School
-// const InternQuestions = [
-//     {
-//         name: 'InternName',
-//         type: 'input',
-//         message: 'What is the name of the intern?',
-//     },
-//     {
-//         name: 'InternID',
-//         type: 'input',
-//         message: 'What is their ID code?',
-//     },
-//     {
-//         name: 'InternEmail',
-//         type: 'input',
-//         message: 'What is their email address?',
-//     },
-//     {
-//         name: 'InternSchool',
-//         type: 'input',
-//         message: 'What is their school name?',
-//     },
-// ];
 
 // TODO:
 // Call the `render` function (provided for you) and pass in an array containing all employee objects; 
