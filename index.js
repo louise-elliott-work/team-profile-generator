@@ -17,29 +17,70 @@ const render = require("./src/page-template.js");
 
 
 // * array of Team Manager prompts
-const TMquestions = [
-    // * When a user starts the application then they are prompted to enter the **team manager**’s:
+// const Manager = [
+//     // * When a user starts the application then they are prompted to enter the **team manager**’s:
+//         //   * Name
+//         //   * Employee ID
+//         //   * Email address
+//         //   * Office number
+//     {
+//         name: 'name',
+//         type: 'input',
+//         message: 'What is the name of your team manager?',
+//     },
+//     {
+//         name: 'id',
+//         type: 'input',
+//         message: 'What is their ID code?',
+//     },
+//     {
+//         name: 'email',
+//         type: 'input',
+//         message: 'What is their email address?',
+//     },
+//     {
+//         name: 'officeNumber',
+//         type: 'input',
+//         message: 'What is their office number?',
+//     },
+//     // * When a user enters those requirements then the user is presented with a menu with the option to:
+//     //   * Add an engineer
+//     //   * Add an intern 
+//     //   * Finish building the team
+//     {
+//         name: 'nextStep',
+//         type: 'list',
+//         message: 'What do you want to do now?',
+//         choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
+//     }
+// ];
+
+
+inquirer
+    .prompt ([
+        
+            // * When a user starts the application then they are prompted to enter the **team manager**’s:
         //   * Name
         //   * Employee ID
         //   * Email address
         //   * Office number
     {
-        name: 'TMname',
+        name: 'name',
         type: 'input',
         message: 'What is the name of your team manager?',
     },
     {
-        name: 'TMid',
+        name: 'id',
         type: 'input',
         message: 'What is their ID code?',
     },
     {
-        name: 'TMemail',
+        name: 'email',
         type: 'input',
         message: 'What is their email address?',
     },
     {
-        name: 'TMoffice',
+        name: 'officeNumber',
         type: 'input',
         message: 'What is their office number?',
     },
@@ -53,13 +94,10 @@ const TMquestions = [
         message: 'What do you want to do now?',
         choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
     }
-];
 
-
-inquirer
-    .prompt (TMquestions)
+    ])
     .then((response) => {
-        const { TMname, TMid, TMemail, TMoffice, nextStep } = response;
+        const { name, id, email, officeNumber, nextStep } = response;
         console.log(response);
         if (nextStep === "Add an engineer") {
             console.log("option to add an engineer selected");
@@ -72,31 +110,23 @@ inquirer
             // * When a user decides to finish building their team then they exit the application, and the HTML is generated.   
             fs.appendFile('output/team.html',
             (`
-            ${TMname}
-            ${TMid}
-            ${TMemail}
-            ${TMoffice}
-            `),
-            (err) => err ? console.error(err) : console.log('HTML file generated'))
-        }
-    })
-;
+                <div class="card employee-card">
+                <div class="card-header">
+                    <h2 class="card-title">${name}</h2>
 
-
-
-//             else if (nextStep === "Finish building the team") {
-//                 //! End process and create file   
-//                 // * When a user decides to finish building their team then they exit the application, and the HTML is generated.   
-//                 fs.writeFile('/output/team.html',
-//                 (`
-//                 ${TMname}
-//                 ${TMid}
-//                 ${TMemail}
-//                 ${TMoffice}
-//                 `),
-//                 (err) => err ? console.error(err) : console.log('HTML file generated'))
-//             }
-//     });
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">ID: ${id}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
+                        <li class="list-group-item">Office number: ${officeNumber}</li>
+                    </ul>
+                </div>
+            </div>
+                `),
+        (err) => err ? console.error(err) : console.log('README generated')
+    )}
+});
 
 
 // // * When a user selects the **engineer** option then a user is prompted to enter the following and then the user is taken back to the menu:
