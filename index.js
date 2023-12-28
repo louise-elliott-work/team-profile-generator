@@ -10,7 +10,7 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-// TODO work out how to use this
+// * render function to create HTML file
 const render = require("./src/page-template.js");
 
 // * Write code in `index.js` that uses inquirer to gather information about the development team members and creates objects for each team member using the correct classes as blueprints.
@@ -55,7 +55,7 @@ inquirer
     ])
     .then((Manager) => {
         const { name, id, email, officeNumber, nextStep } = Manager;
-        console.log(Manager);
+        console.log(name, id, email, officeNumber, nextStep);
         if (nextStep === "Add an engineer") {
             console.log("option to add an engineer selected");
             inquirer
@@ -129,28 +129,13 @@ inquirer
         }
         else if (nextStep === "Finish building the team") {
             // * prompt user with questions and log answers in a file named `team.html` in the `output` folder.
-            // * When a user decides to finish building their team then they exit the application, and the HTML is generated.   
-            fs.appendFile(outputPath,
-            (`
-                <div class="card employee-card">
-                <div class="card-header">
-                    <h2 class="card-title">${name}</h2>
-
-                </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        <li class="list-group-item">ID: ${id}</li>
-                        <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
-                        <li class="list-group-item">Office number: ${officeNumber}</li>
-                    </ul>
-                </div>
-            </div>
-                `),
-        (err) => err ? console.error(err) : console.log('HTML generated')
-    )}
+            // * When a user decides to finish building their team then they exit the application, and the HTML is generated. 
+            // TODO Check render function is correct once other functions reviewed and tested  
+            fs.appendFile(outputPath, render(Manager), (err) => err ? console.error(err) : console.log('HTML generated'))
+        }
 });
 
-// TODO:
+// ! Notes:
 // Call the `render` function (provided for you) and pass in an array containing all employee objects; 
 // The `render` function will generate and return a block of HTML including templated divs for each employee!
 // Create an HTML file using the HTML returned from the `render` function. 
