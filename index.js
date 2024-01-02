@@ -1,59 +1,81 @@
-// ! use inquirer to gather information about the team members and create objects for each one using the correct classes as blueprints
-// ! prompt user with questions and log answers in a file named `team.html` in the `output` folder.
-// ! create an HTML file using the HTML returned from the `render` function.
-
 // * requires
 const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
 const inquirer = require("inquirer");
-const template = require("./src/page-template.js");
-
-// * file path for html creation in targeted folder
 const path = require("path");
 const fs = require("fs");
+
+// * file path for html creation in targeted folder
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-// TODO check how this works
-const { nextTick } = require("process");
+// * rendering the HTML file once user input has been captured
+const render = require("./src/page-template.js");
 
-// * array of objects for team members
-const teamArray = [];
+// * prompts
+const namePrompt =             
+    {
+        name: 'name',
+        type: 'input',
+        message: 'Enter name',
+    };
+const idPrompt =
+    {
+        name: 'id',
+        type: 'input',
+        message: 'Enter ID code',
+    };
+const emailPrompt = 
+    {
+        name: 'email',
+        type: 'input',
+        message: 'Enter email',
+    };
+const officeNumberPrompt =
+    {
+        name: 'officeNumber',
+        type: 'input',
+        message: 'Enter office number',
+    };
+const schoolPrompt = 
+    {
+        name: 'school',
+        type: 'input',
+        message: 'Enter school name',
+    };
+const githubPrompt =
+    {
+        name: 'github',
+        type: 'input',
+        message: 'Enter GitHub username',
+    };
+const nextStepPrompt =
+    {
+        name: 'nextStep',
+        type: 'list',
+        message: 'What do you want to do now?',
+        choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
+    };
 
+// TODO create an HTML file using the HTML returned from the `render` function
 // TODO render function to create HTML file once all user input has been captured, passing in an array containing all employee objects, and returning a block of HTML including templated divs for each employee
-function render () {
-    fs.appendFile(outputPath, team(template), (err) => err ? console.error(err) : console.log('HTML generated'))
+
+function createHTMLfile () {
+    fs.appendFile(outputPath, `${render}`, (err) => err ? console.error(err) : console.log('HTML generated'))
 }
 
 // * function to add an engineer: when the user selects the **engineer** option, they are prompted to enter the name, ID, email and GitHub username of the engineer, then they are taken back to the menu.
 function addEngineer () {
     inquirer
     .prompt ([
-        {
-            name: 'name',
-            type: 'input',
-            message: 'What is the name of the engineer?',
-        },
-        {
-            name: 'id',
-            type: 'input',
-            message: 'What is their ID code?',
-        },
-        {
-            name: 'email',
-            type: 'input',
-            message: 'What is their email address?',
-        },
-        {
-            name: 'github',
-            type: 'input',
-            message: 'What is their GitHub username?',
-        },
+        namePrompt,
+        idPrompt,
+        emailPrompt,
+        githubPrompt
     ])
     .then ((engineer) => {
         new Engineer (engineer);
-        teamArray.push(engineer);
         checkNextStep();
     });
 };
@@ -62,60 +84,32 @@ function addEngineer () {
 function addIntern () {
     inquirer
         .prompt ([
-            {
-                name: 'name',
-                type: 'input',
-                message: 'What is the name of the intern?',
-            },
-            {
-                name: 'id',
-                type: 'input',
-                message: 'What is their ID code?',
-            },
-            {
-                name: 'email',
-                type: 'input',
-                message: 'What is their email address?',
-            },
-            {
-                name: 'school',
-                type: 'input',
-                message: 'What is their school name?',
-            },
+            namePrompt,
+            idPrompt,
+            emailPrompt,
+            schoolPrompt
         ])
         .then ((intern) => {
             new Intern (intern);
-            teamArray.push(intern);
             checkNextStep();
         });
 };
 
-// * function to capture user choice for next step
+// * function to capture user choice for next step and call the relevant function 
 function checkNextStep () {
     inquirer
-    .prompt (
-        {
-            name: 'nextStep',
-            type: 'list',
-            message: 'What do you want to do now?',
-            choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
-        }
-    )
+    .prompt (nextStepPrompt)
     .then ((nextFunction) => {
         const { nextStep } = nextFunction;
         if (nextStep === "Add an engineer") {
-            // * call function to add an engineer
             addEngineer();
         }
         else if (nextStep === "Add an intern") {
-            // * call function to add an intern
             addIntern();
         }
+        // TODO When a user decides to finish building their team then they exit the application, and the HTML is generated.
         else if (nextStep === "Finish building the team") {
-            // * call function to return a team array for HTML creation
-            // TODO When a user decides to finish building their team then they exit the application, and the HTML is generated.
-            console.log(teamArray);
-            return teamArray;
+            createHTMLfile();
         }
     })
 };
@@ -124,34 +118,13 @@ function checkNextStep () {
 function startTeamBuild () {
     inquirer
     .prompt ([
-        {
-            name: 'name',
-            type: 'input',
-            message: 'What is the name of your team manager?',
-        },
-        {
-            name: 'id',
-            type: 'input',
-            message: 'What is their ID code?',
-        },
-        {
-            name: 'email',
-            type: 'input',
-            message: 'What is their email address?',
-        },
-        {
-            name: 'officeNumber',
-            type: 'input',
-            message: 'What is their office number?',
-        },
-        // * When a user enters those requirements then the user is presented with a menu with the option to:
-        //   * Add an engineer
-        //   * Add an intern 
-        //   * Finish building the team
+        namePrompt,
+        idPrompt,
+        emailPrompt,
+        officeNumberPrompt
     ])
     .then ((manager) => {
         new Manager (manager);
-        teamArray.push(manager);
         checkNextStep();
     });
 };
