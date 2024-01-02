@@ -59,17 +59,26 @@ const nextStepPrompt =
 // TODO render function to create HTML file once all user input has been captured, passing in an array containing all employee objects, and returning a block of HTML including templated divs for each employee
 
 function createHTMLfile () {
+    // * create output file if it does not already exist
+    const output = 'output';
+    try {
+        if (!fs.existsSync(output)) {
+        fs.mkdirSync(output);
+        }
+    } catch (err) {
+        console.error(err);
+    };
     // TODO push array to template file (pass in an array containing all employee objects)
-    console.log(employee);
+    console.log(team);
     // TODO then:
-    fs.appendFile(outputPath, `${render}`, (err) => err ? console.error(err) : console.log('HTML generated'))
+    fs.appendFile(outputPath, render(), (err) => err ? console.error(err) : console.log('HTML generated'))
 }
 
 // * rendering the HTML file once user input has been captured
 const render = require("./src/page-template.js");
 
 // * employee array to be populated from user input
-const employee = [];
+const team = [];
 
 // * function to add an engineer: when the user selects the **engineer** option, they are prompted to enter the name, ID, email and GitHub username of the engineer, then they are taken back to the menu.
 function addEngineer () {
@@ -82,7 +91,7 @@ function addEngineer () {
     ])
     .then ((engineer) => {
         new Engineer (engineer);
-        employee.push(engineer);
+        team.push(engineer);
         checkNextStep();
     });
 };
@@ -98,7 +107,7 @@ function addIntern () {
         ])
         .then ((intern) => {
             new Intern (intern);
-            employee.push(intern);
+            team.push(intern);
             checkNextStep();
         });
 };
@@ -132,7 +141,7 @@ function startTeamBuild () {
     ])
     .then ((manager) => {
         new Manager (manager);
-        employee.push(manager);
+        team.push(manager);
         checkNextStep();
     });
 };
