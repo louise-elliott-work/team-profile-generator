@@ -56,9 +56,6 @@ const nextStep =
         choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
     };
 
-// TODO create an HTML file using the HTML returned from the `render` function
-// TODO render function to create HTML file once all user input has been captured, passing in an array containing all employee objects, and returning a block of HTML including templated divs for each employee
-
 function createHTMLfile () {
     // * create output file if it does not already exist
     const output = 'output';
@@ -69,9 +66,11 @@ function createHTMLfile () {
     } catch (err) {
         console.error(err);
     };
-    // ! push array to template file (pass in an array containing all employee objects)
-    console.log(team);
-    fs.appendFile(outputPath, render(), (err) => err ? console.error(err) : console.log('HTML generated'))
+    console.log(team.filter(employee => employee.getRole() === "Manager"));
+    console.log(team.filter(employee => employee.getRole() === "Engineer"));
+    console.log(team.filter(employee => employee.getRole() === "Intern"));
+    // ! The above console logs look okay. Now I need to pass the team array to the page-template.js file. At the moment, if I uncomment the line below, I get an error.
+    // fs.appendFile(outputPath, render(), (err) => err ? console.error(err) : console.log('HTML generated'))
 }
 
 // * employee array to be populated from user input
@@ -146,5 +145,5 @@ function startTeamBuild () {
 // * call function to start the team build by adding a Team Manager
 startTeamBuild();
 
-// TODO Export team array.
+// * Export team array.
 module.exports = team;
