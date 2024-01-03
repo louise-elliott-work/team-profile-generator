@@ -66,11 +66,7 @@ function createHTMLfile () {
     } catch (err) {
         console.error(err);
     };
-    console.log(team.filter(employee => employee.getRole() === "Manager"));
-    console.log(team.filter(employee => employee.getRole() === "Engineer"));
-    console.log(team.filter(employee => employee.getRole() === "Intern"));
-    // ! The above console logs look okay. Now I need to pass the team array to the page-template.js file. At the moment, if I uncomment the line below, I get an error.
-    // fs.appendFile(outputPath, render(), (err) => err ? console.error(err) : console.log('HTML generated'))
+    fs.writeFileSync(outputPath, render(team), (err) => err ? console.error(err) : console.log('HTML generated'))
 }
 
 // * employee array to be populated from user input
