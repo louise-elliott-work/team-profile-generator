@@ -69,9 +69,10 @@ function createHTMLfile () {
         console.error(err);
     };
     // TODO push array to template file (pass in an array containing all employee objects)
+    // ! This is the array of objects I think I need to pass to render the HTML. It shows the user input correctly but it is not showing the getRole result so the page-template file will not know the employee type when the array is passed.
     console.log(team);
     // TODO then:
-    fs.appendFile(outputPath, render(), (err) => err ? console.error(err) : console.log('HTML generated'))
+    // fs.appendFile(outputPath, render(), (err) => err ? console.error(err) : console.log('HTML generated'))
 }
 
 // * rendering the HTML file once user input has been captured
