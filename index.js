@@ -11,43 +11,43 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 // * prompts
-const namePrompt =             
+const name =             
     {
         name: 'name',
         type: 'input',
         message: 'Enter name',
     };
-const idPrompt =
+const id =
     {
         name: 'id',
         type: 'input',
         message: 'Enter ID code',
     };
-const emailPrompt = 
+const email = 
     {
         name: 'email',
         type: 'input',
         message: 'Enter email',
     };
-const officeNumberPrompt =
+const officeNumber =
     {
         name: 'officeNumber',
         type: 'input',
         message: 'Enter office number',
     };
-const schoolPrompt = 
+const school = 
     {
         name: 'school',
         type: 'input',
         message: 'Enter school name',
     };
-const githubPrompt =
+const github =
     {
         name: 'github',
         type: 'input',
         message: 'Enter GitHub username',
     };
-const nextStepPrompt =
+const nextStep =
     {
         name: 'nextStep',
         type: 'list',
@@ -85,13 +85,13 @@ const team = [];
 function addEngineer () {
     inquirer
     .prompt ([
-        namePrompt,
-        idPrompt,
-        emailPrompt,
-        githubPrompt,
+        name,
+        id,
+        email,
+        github,
     ])
-    .then ((engineer) => {
-        new Engineer (engineer);
+    .then ((answers) => {
+        const engineer = new Engineer (answers);
         team.push(engineer);
         checkNextStep();
     });
@@ -101,13 +101,13 @@ function addEngineer () {
 function addIntern () {
     inquirer
         .prompt ([
-            namePrompt,
-            idPrompt,
-            emailPrompt,
-            schoolPrompt
+            name,
+            id,
+            email,
+            school
         ])
-        .then ((intern) => {
-            new Intern (intern);
+        .then ((answers) => {
+            const intern = new Intern (answers);
             team.push(intern);
             checkNextStep();
         });
@@ -116,7 +116,7 @@ function addIntern () {
 // * function to capture user choice for next step and call the relevant function 
 function checkNextStep () {
     inquirer
-    .prompt (nextStepPrompt)
+    .prompt (nextStep)
     .then ((nextFunction) => {
         const { nextStep } = nextFunction;
         if (nextStep === "Add an engineer") {
@@ -135,13 +135,13 @@ function checkNextStep () {
 function startTeamBuild () {
     inquirer
     .prompt ([
-        namePrompt,
-        idPrompt,
-        emailPrompt,
-        officeNumberPrompt
+        name,
+        id,
+        email,
+        officeNumber
     ])
-    .then ((manager) => {
-        new Manager (manager);
+    .then ((answers) => {
+        const manager = new Manager (answers);
         team.push(manager);
         checkNextStep();
     });
