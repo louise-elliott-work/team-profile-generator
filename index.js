@@ -12,6 +12,11 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 // * prompts
+const manager =             
+    {
+        name: 'manager',
+        message: 'You must start by entering the details of the team manager - please click enter',
+    };
 const name =             
     {
         name: 'name',
@@ -66,6 +71,7 @@ function createHTMLfile () {
     } catch (err) {
         console.error(err);
     };
+    // * call the render function, passing in the array of team members, for the html file to be generated in the output folder
     fs.writeFileSync(outputPath, render(team), (err) => err ? console.error(err) : console.log('HTML generated'))
 }
 
@@ -126,6 +132,7 @@ function checkNextStep () {
 function startTeamBuild () {
     inquirer
     .prompt ([
+        manager,
         name,
         id,
         email,
@@ -140,6 +147,3 @@ function startTeamBuild () {
 
 // * call function to start the team build by adding a Team Manager
 startTeamBuild();
-
-// * Export team array.
-module.exports = team;
