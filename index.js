@@ -91,7 +91,7 @@ function addEngineer () {
         github,
     ])
     .then ((answers) => {
-        const engineer = new Engineer (answers);
+        const engineer = new Engineer (answers.name, answers.id, answers.email, answers.github);
         team.push(engineer);
         checkNextStep();
     });
@@ -107,7 +107,7 @@ function addIntern () {
             school
         ])
         .then ((answers) => {
-            const intern = new Intern (answers);
+            const intern = new Intern (answers.name, answers.id, answers.email, answers.school);
             team.push(intern);
             checkNextStep();
         });
@@ -141,7 +141,7 @@ function startTeamBuild () {
         officeNumber
     ])
     .then ((answers) => {
-        const manager = new Manager (answers);
+        const manager = new Manager (answers.name, answers.id, answers.email, answers.officeNumber);
         team.push(manager);
         checkNextStep();
     });
