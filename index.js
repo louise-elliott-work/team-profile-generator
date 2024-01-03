@@ -1,10 +1,11 @@
 // * requires
-const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
+const Manager = require("./lib/Manager.js");
+const fs = require("fs");
 const inquirer = require("inquirer");
 const path = require("path");
-const fs = require("fs");
+const render = require("./src/page-template.js");
 
 // * file path for html creation in targeted folder
 const OUTPUT_DIR = path.resolve(__dirname, "output");
@@ -68,15 +69,10 @@ function createHTMLfile () {
     } catch (err) {
         console.error(err);
     };
-    // TODO push array to template file (pass in an array containing all employee objects)
-    // ! This is the array of objects I think I need to pass to render the HTML. It shows the user input correctly but it is not showing the getRole result so the page-template file will not know the employee type when the array is passed.
+    // ! push array to template file (pass in an array containing all employee objects)
     console.log(team);
-    // TODO then:
-    // fs.appendFile(outputPath, render(), (err) => err ? console.error(err) : console.log('HTML generated'))
+    fs.appendFile(outputPath, render(), (err) => err ? console.error(err) : console.log('HTML generated'))
 }
-
-// * rendering the HTML file once user input has been captured
-const render = require("./src/page-template.js");
 
 // * employee array to be populated from user input
 const team = [];
@@ -149,3 +145,6 @@ function startTeamBuild () {
 
 // * call function to start the team build by adding a Team Manager
 startTeamBuild();
+
+// TODO Export team array.
+module.exports = team;
