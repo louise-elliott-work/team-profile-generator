@@ -1,0 +1,29 @@
+.team-heading {
+    background-color: #557373;
+}
+
+h1 {
+    color: #f2efea;
+}
+
+h3 {
+    color: #557373;
+}
+
+.employee-card {
+    margin: 10px;
+    width: 15rem;
+}
+
+
+.card-header {
+    background-color: #dfe5f3;
+}
+
+.card-body {
+    background-color: #f2efea;
+}
+
+.list-group-item {
+    background-color: #f2efea98;
+}
