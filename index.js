@@ -61,17 +61,8 @@ const nextStep =
         choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
     };
 
+// * call the render function, passing in the array of team members, for the html file to be generated in the output folder
 function createHTMLfile () {
-    // * create output file if it does not already exist
-    const output = 'output';
-    try {
-        if (!fs.existsSync(output)) {
-        fs.mkdirSync(output);
-        }
-    } catch (err) {
-        console.error(err);
-    };
-    // * call the render function, passing in the array of team members, for the html file to be generated in the output folder
     fs.writeFileSync(outputPath, render(team), (err) => err ? console.error(err) : console.log('HTML generated'))
 }
 
