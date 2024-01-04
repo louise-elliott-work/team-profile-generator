@@ -1,18 +1,18 @@
-# team-profile-generator
+# Team profile generator
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ## Contents
 [Description](#description)<br>
 [Installation](#installation)<br>
 [Usage](#usage)<br>
-[license](#license)<br>
+[License](#license)<br>
 [Contributions](#contributions)<br>
 [Testing](#testing)<br>
 ## Description
-This is a command-line application that generates a profile of software development team members based on user input.
+This is a command-line application that generates a profile of software development team members based on user input. The user input is gathered using Inquirer and objects are created for each team member using the relevant classes.
 ## Installation
 Run the following command in order to install dependencies: npm i
 ## Usage
-In order to initiate the process, the user must type into the command line 'node index.js' then answer the prompts. Once all prompts have been answered, an HTML will be generated in a folder called 'output'.
+In order to initiate the process, the user must type into the command line 'node index.js' then answer the prompts. When a user starts the application, they are prompted to enter the team manager's name, id, email and office number. Once that has been done, the user is presented with a menu with options to: add an engineer, add an intern or finish building the team. When a user selects the engineer option, they are prompted to enter the following and then taken back to the menu: name, id, email and GitHub username. When a user selects the intern option, they are prompted to enter the following and then taken back to the menu: name, id, email and school. When the user chooses to finish building the team, they exit the application and the HTML is generated in a folder called 'output'.
 ## License
 2024 Louise Elliott
 MIT License
